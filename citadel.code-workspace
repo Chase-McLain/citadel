@@ -5,8 +5,8 @@
       "path": "server"
     },
     {
-      "name": "the_citadel",
-      "path": "the_citadel"
+      "name": "client",
+      "path": "client"
     }
   ]
 }
