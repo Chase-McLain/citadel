@@ -11,12 +11,24 @@ export class CitadelEventsController extends BaseController{
     super('api/events')
       this.router
         .get('', this.getEvents)
+        .get('/:eventId', this.getEventById)
         .use(Auth0Provider.getAuthorizedUserInfo)
         .post('', this.createEvent)
 
 
 
 
+  }
+
+
+  async getEventById(request, response, next){
+    try {
+      const eventId = request.params.eventId
+      const selectedEvent = await citadelEventsService.getEventById(eventId)
+      response.send(selectedEvent)
+    } catch (error) {
+      next(error)
+    }
   }
 
 
