@@ -14,10 +14,33 @@ export class CitadelEventsController extends BaseController{
         .get('/:eventId', this.getEventById)
         .use(Auth0Provider.getAuthorizedUserInfo)
         .post('', this.createEvent)
+        .put('/:eventId', this.updateEvent)
+        .delete('/:eventId', this.cancelEvent)
 
 
+  }
 
 
+  async cancelEvent(request, response, next){
+    try {
+      const eventId = request.params.eventId
+      const canceledEvent = await citadelEventsService.cancelEvent(eventId)
+      response.send(canceledEvent)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+
+  async updateEvent(request, response, next){
+    try {
+      const eventData = request.body
+      const eventId = request.params.eventId
+      const updatedEvent = await citadelEventsService.updateEvent(eventId, eventData)
+      response.send(updatedEvent)
+    } catch (error) {
+      next(error)
+    }
   }
 
 

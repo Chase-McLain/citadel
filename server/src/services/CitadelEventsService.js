@@ -3,11 +3,28 @@ import { dbContext } from "../db/DbContext.js"
 
 
 
+
 class CitadelEventsService{
+ cancelEvent(eventId) {
+   throw new Error("Method not implemented.")
+ }
+
+
+ async updateEvent(eventId, eventData) {
+   let updatedEvent = await this.getEventById(eventId)
+   updatedEvent.name = eventData.name
+   updatedEvent.description = eventData.description
+   await updatedEvent.save()
+   return updatedEvent
+ }
 
 
  async getEventById(eventId) {
    const selectedEvent = await dbContext.CitadelEvents.findById(eventId).populate('creator', 'name picture')
+   if (selectedEvent == null) {
+    throw new Error("No event by that Id exists");
+    
+   }
    return selectedEvent
  }
 
