@@ -3,6 +3,7 @@ import { AccountSchema } from '../models/Account.js'
 import { ValueSchema } from '../models/Value.js'
 import { CitadelEventSchema } from '../models/CitadelEvent.js';
 import { TicketSchema } from '../models/Ticket.js';
+import { CommentSchema } from '../models/Comment.js';
 
 class DbContext {
 
@@ -13,6 +14,8 @@ class DbContext {
   CitadelEvents = mongoose.model('CitadelEvent', CitadelEventSchema);
 
   Tickets = mongoose.model('Ticket', TicketSchema);
+
+  Comments = mongoose.model('Comment', CommentSchema);
 
 }
 
