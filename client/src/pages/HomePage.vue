@@ -1,6 +1,8 @@
 <script setup>
 import { AppState } from '@/AppState.js';
+import EventForm from '@/components/EventForm.vue';
 import EventListings from '@/components/EventListings.vue';
+import ModalWrapper from '@/components/ModalWrapper.vue';
 import { citadelEventsService } from '@/services/CitadelEventsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
@@ -95,6 +97,11 @@ async function getEvents() {
         <EventListings :event="event" />
       </div>
     </section>
+  </div>
+  <div>
+    <ModalWrapper modal-id="" modal-title="">
+      <EventForm />
+    </ModalWrapper>
   </div>
 
 </template>

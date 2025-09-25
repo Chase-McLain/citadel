@@ -17,7 +17,7 @@ watch(theme, () => {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-md bg-codeworks border-bottom border-vue p-2">
+  <nav class="navbar navbar-expand-md bg-codeworks border-bottom border-black p-2">
     <div class="container">
       <div class="logo-box">
         <RouterLink :to="{ name: 'Home' }" class="d-flex align-items-center text-light">
