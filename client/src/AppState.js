@@ -1,5 +1,4 @@
 import { reactive } from 'vue'
-import { CitadelEvent } from './models/CitadelEvent.js'
 
 // NOTE AppState is a reactive object to contain app level data
 export const AppState = reactive({
@@ -10,9 +9,11 @@ export const AppState = reactive({
   /** @type {import('./models/Account.js').Account} user info from the database*/
   account: null,
 
-  /** @type {import('./models/CitadelEvent.js').CitadelEvent[]} user info from the database*/
-  CitadelEvents: [],
+  /** @type {import('./models/CitadelEvent.js').CitadelEvent[]}*/
+  citadelEvents: [],
 
+  /** @type {import('./models/Comment.js').Comment[]}*/
+  comments: [],
 
 })
 
