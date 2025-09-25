@@ -73,8 +73,8 @@ async function createEvent() {
         </div>
         <div class="col-md-7 mt-2">
           <label for="event-capacity" class="form-label">Event Capacity: (how many people can attend your event)</label>
-          <input v-model="eventData.capacity" id="event-capacity" class="form-control" type="number" required
-            minlength="1" maxlength="5000">
+          <input v-model="eventData.capacity" id="event-capacity" class="form-control" type="number" required min="1"
+            max="5000">
         </div>
         <div class="col-md-5 mt-2">
           <label for="event-type" class="form-label">Event Type: (choose an event type)</label>

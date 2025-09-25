@@ -6,7 +6,7 @@ import ModalWrapper from '@/components/ModalWrapper.vue';
 import { citadelEventsService } from '@/services/CitadelEventsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 onMounted(() =>
   getEvents()
@@ -14,9 +14,36 @@ onMounted(() =>
 )
 
 
+const events = computed(() => {
+  if (Category.value == 'all') {
+    return AppState.citadelEvents
+  }
+  return AppState.citadelEvents.filter((event) => event.type == Category.value)
+})
 
-const events = computed(() => AppState.citadelEvents)
 
+const Category = ref('all')
+
+const categories = [
+
+  {
+    name: 'concert',
+    picture: 'https://clubrunner.blob.core.windows.net/00000013059/Images/image_20230611-090624.png'
+  },
+  {
+    name: 'convention',
+    picture: 'https://www.visitsandiego.com/images/2025/08/08/Digestive%20Disease%20Week%20DDW%20-%202025-1078711_large.jpg'
+  },
+  {
+    name: 'sport',
+    picture: 'https://live.staticflickr.com/5248/5272609842_4161eecc30_b.jpg'
+  },
+  {
+    name: 'digital',
+    picture: 'https://static.vecteezy.com/system/resources/previews/024/021/028/large_2x/4k-digital-binary-code-random-number-grid-technology-background-photo.jpg'
+  }
+
+]
 
 async function getEvents() {
   try {
@@ -81,12 +108,16 @@ async function getEvents() {
         </h3>
       </div>
     </section>
-    <section class="row border-top border-black mt-5 justify-content-evenly">
-      <div class="col">
-        rats
+    <section class="row border-top border-black mt-5 justify-content-evenly ">
+      <div v-for="category in categories" :key="category.name" class="col-md-3 text-center">
+        <div type="button" @click="Category = category.name"
+          class="mt-2 category-holder d-flex align-items-center justify-content-center rounded-5"
+          :style="{ backgroundImage: `URL(${category.picture})` }">
+          <h4 class="mb-0 logo-box text-white p-2"> {{ category.name }} </h4>
+        </div>
       </div>
     </section>
-    <section class="row position-relative mt-5 border-top border-black">
+    <section class="row position-relative mt-4 border-top border-black">
       <div class="col-md-2 relcol">
         <h3 class="how-to-header text-center">
           All Events
@@ -146,5 +177,17 @@ main {
   object-position: center;
   min-width: 100%;
   aspect-ratio: 1/1;
+}
+
+.category-holder {
+  min-height: 90px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.logo-box {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 50px;
 }
 </style>
