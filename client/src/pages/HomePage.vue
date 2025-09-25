@@ -1,5 +1,6 @@
 <script setup>
 import { AppState } from '@/AppState.js';
+import EventListings from '@/components/EventListings.vue';
 import { citadelEventsService } from '@/services/CitadelEventsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
@@ -91,16 +92,7 @@ async function getEvents() {
     </section>
     <section class="row border-top border-black mt-5">
       <div v-for="event in events" :key="event.id" class="col-md-3 mt-3">
-        <div class="event-box position-relative">
-          <img class="img-fluid event-pic" :src="event.coverImg" alt="event picture">
-          <b>{{ event.name }}</b>
-          <p class="m-0">Hosted by: {{ event.creator.name }}</p>
-          <p class="m-0">{{ event.newStartDate }} - {{ event.location }}</p>
-          <p>{{ event.ticketCount }} people attending</p>
-          <p class="position-absolute top-0 end-0 bg-white rounded-start p-1 border-start border-bottom border-black">{{
-            event.type }}
-          </p>
-        </div>
+        <EventListings :event="event" />
       </div>
     </section>
   </div>
