@@ -1,5 +1,6 @@
 import { Auth0Provider } from "@bcwdev/auth0provider";
 import BaseController from "../utils/BaseController.js";
+import { ticketsService } from "../services/TicketsService.js";
 
 
 
@@ -19,7 +20,7 @@ export class TicketsController extends BaseController{
     try {
       const ticketData = request.body
       ticketData.accountId = request.userInfo.id
-      const newTicket = await 
+      const newTicket = await ticketsService.createTicket(ticketData)
       response.send(newTicket)
     } catch (error) {
       next(error)
