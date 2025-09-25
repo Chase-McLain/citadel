@@ -5,8 +5,13 @@ import { dbContext } from "../db/DbContext.js"
 
 
 class CitadelEventsService{
- cancelEvent(eventId) {
-   throw new Error("Method not implemented.")
+
+
+ async cancelEvent(eventId) {
+   const canceledEvent = await this.getEventById(eventId)
+   canceledEvent.isCanceled = !canceledEvent.isCanceled
+   await canceledEvent.save()
+   return canceledEvent
  }
 
 
