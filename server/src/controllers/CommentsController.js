@@ -1,5 +1,6 @@
 import { Auth0Provider } from "@bcwdev/auth0provider/lib/Auth0Provider.js";
 import BaseController from "../utils/BaseController.js";
+import { commentsService } from "../services/CommentsService.js";
 
 
 
@@ -17,7 +18,7 @@ export class CommentsController extends BaseController{
     try {
       const commentData = request.body
       commentData.creatorId = request.userInfo.Id
-      const newComment = await
+      const newComment = await commentsService.createComment(commentData)
       response.send(newComment)
     } catch (error) {
       next(error)
