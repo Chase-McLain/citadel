@@ -10,6 +10,7 @@ class CitadelEventsService{
     const response = await api.get('api/events')
     const events = response.data.map((event) => new CitadelEvent(event))
     AppState.citadelEvents = events
+    logger.log(response)
   }
 
 

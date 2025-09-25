@@ -64,9 +64,10 @@ async function getEvents() {
       <div class="col-md-4 my-5">
         <div class="how-to-box me-5">
           <h4 class="ms-2"><span class="mdi mdi-plus"> Start an event with Steve now</span></h4>
-          <p class="ms-2">Create an event with citadel and aid in the imprisonment of millions</p>
+          <p class="ms-2">Create an event with the citadel and aid in the imprisonment of millions</p>
           <div class="text-end">
-            <button class="btn btn-success me-2 mb-2">
+            <button class="btn btn-success me-2 mb-2" type="button" data-bs-target="#event-form-modal"
+              data-bs-toggle="modal">
               <span class="mdi mdi-plus-box"></span> CREATE EVENT
             </button>
           </div>
@@ -99,7 +100,7 @@ async function getEvents() {
     </section>
   </div>
   <div>
-    <ModalWrapper modal-id="" modal-title="">
+    <ModalWrapper modal-id="event-form-modal" modal-title="Create an event">
       <EventForm />
     </ModalWrapper>
   </div>
