@@ -4,6 +4,20 @@ import { dbContext } from "../db/DbContext.js"
 
 
 class TicketsService{
+
+
+ async deleteTicket(ticketId, userInfo) {
+   const deletedTicket = await dbContext.Tickets.findById(ticketId)
+   if (!deletedTicket) {
+    throw new Error("No tickets exist by that Id");
+   }
+   if (deletedTicket.accountId != userInfo.id) {
+    throw new Error("I know what you are");
+   }
+   await deletedTicket.deleteOne()
+ }
+
+
  async getTicketsByEvent(eventId) {
    const tickets = await dbContext.Tickets.find({ eventId }).populate('profile', 'name picture')
    return tickets
