@@ -12,12 +12,18 @@ export class CitadelEvent{
     this.coverImg = data.coverImg
     this.location = data.location
     this.capacity = data.capacity
-    this.startDate = data.startDate
+    this.startDate = new Date(data.startDate)
     this.isCanceled = data.isCanceled
     this.type = data.type
-    this.createdAt = data.createdAt
-    this.updatedAt = data.updatedAt
+    this.createdAt = new Date(data.createdAt)
+    this.updatedAt = new Date(data.updatedAt)
+    this.creator = data.creator
+    this.ticketCount = data.ticketCount
 
+  }
+
+  get newStartDate(){
+    return this.startDate.toLocaleDateString()
   }
 }
 

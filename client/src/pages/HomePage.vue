@@ -1,6 +1,29 @@
 <script setup>
+import { AppState } from '@/AppState.js';
+import { citadelEventsService } from '@/services/CitadelEventsService.js';
+import { logger } from '@/utils/Logger.js';
+import { Pop } from '@/utils/Pop.js';
+import { computed, onMounted } from 'vue';
+
+onMounted(() =>
+  getEvents()
+
+)
 
 
+
+const events = computed(() => AppState.citadelEvents)
+
+
+async function getEvents() {
+  try {
+    await citadelEventsService.getEvents()
+  }
+  catch (error) {
+    Pop.error(error);
+    logger.error('failed to fetch events', error)
+  }
+}
 
 </script>
 
@@ -54,9 +77,30 @@
         </h3>
       </div>
     </section>
-    <section class="row border-top border-black mt-5">
+    <section class="row border-top border-black mt-5 justify-content-evenly">
       <div class="col">
         rats
+      </div>
+    </section>
+    <section class="row position-relative mt-5 border-top border-black">
+      <div class="col-md-2 relcol">
+        <h3 class="how-to-header text-center">
+          All Events
+        </h3>
+      </div>
+    </section>
+    <section class="row border-top border-black mt-5">
+      <div v-for="event in events" :key="event.id" class="col-md-3 mt-3">
+        <div class="event-box position-relative">
+          <img class="img-fluid event-pic" :src="event.coverImg" alt="event picture">
+          <b>{{ event.name }}</b>
+          <p class="m-0">Hosted by: {{ event.creator.name }}</p>
+          <p class="m-0">{{ event.newStartDate }} - {{ event.location }}</p>
+          <p>{{ event.ticketCount }} people attending</p>
+          <p class="position-absolute top-0 end-0 bg-white rounded-start p-1 border-start border-bottom border-black">{{
+            event.type }}
+          </p>
+        </div>
       </div>
     </section>
   </div>
@@ -89,11 +133,18 @@ main {
 
 .how-to-box {
   border: double 5px black;
-  background-color: rgb(183, 178, 178);
+  background-color: rgb(249, 238, 205);
   min-height: 159px;
 }
 
 .sect-bg {
   background-color: grey;
+}
+
+.event-pic {
+  object-fit: cover;
+  object-position: center;
+  min-width: 100%;
+  aspect-ratio: 1/1;
 }
 </style>
