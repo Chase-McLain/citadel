@@ -13,6 +13,7 @@ export class CitadelEventsController extends BaseController{
       this.router
         .get('', this.getEvents)
         .get('/:eventId', this.getEventById)
+        .get('', this.get)
         .get('/:eventId/comments', this.getCommentsByEvent)
         .use(Auth0Provider.getAuthorizedUserInfo)
         .post('', this.createEvent)
@@ -35,7 +36,8 @@ export class CitadelEventsController extends BaseController{
   async cancelEvent(request, response, next){
     try {
       const eventId = request.params.eventId
-      const canceledEvent = await citadelEventsService.cancelEvent(eventId)
+      const userInfo = request.userInfo
+      const canceledEvent = await citadelEventsService.cancelEvent(eventId, userInfo)
       response.send(canceledEvent)
     } catch (error) {
       next(error)
@@ -47,7 +49,8 @@ export class CitadelEventsController extends BaseController{
     try {
       const eventData = request.body
       const eventId = request.params.eventId
-      const updatedEvent = await citadelEventsService.updateEvent(eventId, eventData)
+      const userInfo = request.userInfo
+      const updatedEvent = await citadelEventsService.updateEvent(eventId, eventData, userInfo)
       response.send(updatedEvent)
     } catch (error) {
       next(error)

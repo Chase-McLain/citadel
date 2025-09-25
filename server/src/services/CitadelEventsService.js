@@ -1,3 +1,4 @@
+import { Forbidden } from "@bcwdev/auth0provider/lib/Errors.js"
 import { dbContext } from "../db/DbContext.js"
 
 
@@ -7,16 +8,22 @@ import { dbContext } from "../db/DbContext.js"
 class CitadelEventsService{
 
 
- async cancelEvent(eventId) {
+ async cancelEvent(eventId, userInfo) {
    const canceledEvent = await this.getEventById(eventId)
+   if (canceledEvent.creatorId != userInfo.id) {
+    throw new Forbidden("I know what you are");
+   }
    canceledEvent.isCanceled = !canceledEvent.isCanceled
    await canceledEvent.save()
    return canceledEvent
  }
 
 
- async updateEvent(eventId, eventData) {
+ async updateEvent(eventId, eventData, userInfo) {
    let updatedEvent = await this.getEventById(eventId)
+   if (updatedEvent.creatorId != userInfo.id) {
+    throw new Forbidden("I know what you are");
+   }
    if (updatedEvent.isCanceled) {
     throw new Error("This event has already been canceled");
    }
