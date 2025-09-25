@@ -25,7 +25,7 @@ class CitadelEventsService{
 
 
  async getEventById(eventId) {
-   const selectedEvent = await dbContext.CitadelEvents.findById(eventId).populate('creator', 'name picture')
+   const selectedEvent = await dbContext.CitadelEvents.findById(eventId).populate('creator', 'name picture').populate('ticketCount')
    if (selectedEvent == null) {
     throw new Error("No event by that Id exists");
     

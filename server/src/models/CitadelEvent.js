@@ -30,6 +30,16 @@ export const CitadelEventSchema = new Schema({
     foreignField: '_id',
     ref: 'Account',
     justOne: true
+
+  })
+
+
+   CitadelEventSchema.virtual('ticketCount',{
+
+    localField: '_id',
+    foreignField: 'eventId',
+    ref: 'Ticket',
+    justOne: true
     
   })
 
