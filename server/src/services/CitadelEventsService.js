@@ -45,7 +45,7 @@ class CitadelEventsService{
 
 
  async getEvents() {
-   const citadelEvents = await dbContext.CitadelEvents.find().populate('creator', 'name picture')
+   const citadelEvents = await dbContext.CitadelEvents.find().populate('creator', 'name picture').populate('ticketCount')
    return citadelEvents
  }
 
@@ -53,6 +53,7 @@ class CitadelEventsService{
  async createEvent(eventData) {
     const newEvent = await dbContext.CitadelEvents.create(eventData)
     await newEvent.populate('creator', 'name picture')
+    await newEvent.populate('ticketCount')
     return newEvent
   }
 

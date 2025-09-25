@@ -6,7 +6,7 @@ export const TicketSchema = new Schema({
 
   accountId: { type: Schema.ObjectId, required: true },
   eventId: { type: Schema.ObjectId, required: true },
-  ticketCount: { type: Number, require: true, default: 0}
+  // ticketCount: { type: Number, require: true, default: 0}
 
 },
 {

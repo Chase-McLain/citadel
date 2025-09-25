@@ -39,7 +39,8 @@ export const CitadelEventSchema = new Schema({
     localField: '_id',
     foreignField: 'eventId',
     ref: 'Ticket',
-    justOne: true
+    justOne: false,
+    count: true
     
   })
 

@@ -34,7 +34,6 @@ class TicketsService{
     const newTicket = await dbContext.Tickets.create(ticketData)
     await newTicket.populate('event')
     await newTicket.populate('profile')
-    newTicket.ticketCount ++
     return newTicket
   }
 

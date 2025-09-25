@@ -17,11 +17,13 @@ watch(theme, () => {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-md bg-codeworks border-bottom border-vue">
+  <nav class="navbar navbar-expand-md bg-codeworks border-bottom border-vue p-0">
     <div class="container gap-2">
       <RouterLink :to="{ name: 'Home' }" class="d-flex align-items-center text-light">
-        <img class="navbar-brand" alt="logo" src="/img/cw-logo.png" height="45" />
-        <b class="fs-5">Vue Starter</b>
+        <img class="navbar-brand logo p-0 m-0" alt="logo"
+          src="https://static.vecteezy.com/system/resources/thumbnails/018/741/618/small/castle-towers-tall-png.png"
+          height="45" />
+        <b class="fs-2">Citadel</b>
       </RouterLink>
       <!-- collapse button -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-links"
@@ -54,6 +56,12 @@ watch(theme, () => {
 <style lang="scss" scoped>
 a {
   text-decoration: none;
+}
+
+.logo {
+  object-fit: contain;
+  object-position: center;
+  min-height: 5em;
 }
 
 .nav-link {
