@@ -2,6 +2,7 @@ import { Auth0Provider } from '@bcwdev/auth0provider'
 import { accountService } from '../services/AccountService.js'
 import BaseController from '../utils/BaseController.js'
 import { ticketsService } from '../services/TicketsService.js'
+import { citadelEventsService } from '../services/CitadelEventsService.js'
 
 export class AccountController extends BaseController {
   constructor() {
@@ -10,9 +11,20 @@ export class AccountController extends BaseController {
       .use(Auth0Provider.getAuthorizedUserInfo)
       .get('', this.getUserAccount)
       .get('/tickets', this.getMyTickets)
+      .get('/events', this.getMyEvents)
       .put('', this.editUserAccount)
   }
 
+  
+  async getMyEvents(request, response, next){
+    try {
+      const userInfo = request.userInfo
+      const myEvents = await citadelEventsService.getMyEvents(userInfo)
+      response.send(myEvents)
+    } catch (error) {
+      next(error)
+    }
+  }
 
   async getMyTickets(request, response, next){
     try {

@@ -8,6 +8,13 @@ import { logger } from "@/utils/Logger.js"
 class CitadelEventsService{
 
 
+  async getHostedEvents() {
+    const response = await api.get('account/events')
+    const events = response.data.map((event) => new CitadelEvent(event))
+    AppState.citadelEvents = events
+  }
+
+
   async createEvent(eventData) {
     const response = await api.post('api/events',eventData)
     const event = new CitadelEvent(response.data)

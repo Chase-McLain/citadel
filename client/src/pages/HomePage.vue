@@ -111,7 +111,7 @@ async function getEvents() {
     <section class="row border-top border-black mt-5 justify-content-evenly ">
       <div v-for="category in categories" :key="category.name" class="col-md-3 text-center">
         <div type="button" @click="Category = category.name"
-          class="mt-2 category-holder d-flex align-items-center justify-content-center rounded-5"
+          class="my-3 category-holder d-flex align-items-center justify-content-center rounded-5"
           :style="{ backgroundImage: `URL(${category.picture})` }">
           <h4 class="mb-0 logo-box text-white p-2"> {{ category.name }} </h4>
         </div>

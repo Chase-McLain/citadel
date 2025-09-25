@@ -8,6 +8,12 @@ import { dbContext } from "../db/DbContext.js"
 class CitadelEventsService{
 
 
+ async getMyEvents(userInfo) {
+   const myEvents = await dbContext.CitadelEvents.find({ creatorId: userInfo.id}).populate('creator', 'name picture').populate('ticketCount')
+   return myEvents
+ }
+
+
  async cancelEvent(eventId, userInfo) {
    const canceledEvent = await this.getEventById(eventId)
    if (canceledEvent.creatorId != userInfo.id) {
