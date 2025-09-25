@@ -2,6 +2,7 @@ import { Auth0Provider } from "@bcwdev/auth0provider";
 import BaseController from "../utils/BaseController.js";
 import { citadelEventsService } from "../services/CitadelEventsService.js";
 import { response } from "express";
+import { commentsService } from "../services/CommentsService.js";
 
 
 
@@ -12,12 +13,24 @@ export class CitadelEventsController extends BaseController{
       this.router
         .get('', this.getEvents)
         .get('/:eventId', this.getEventById)
+        .get('/:eventId/comments', this.getCommentsByEvent)
         .use(Auth0Provider.getAuthorizedUserInfo)
         .post('', this.createEvent)
         .put('/:eventId', this.updateEvent)
         .delete('/:eventId', this.cancelEvent)
 
 
+  }
+
+
+  async getCommentsByEvent(request, response, next){
+    try {
+      const eventId = request.params.eventId 
+      const eventComments = await commentsService.getCommentsByEvent(eventId)
+      response.send(eventComments)
+    } catch (error) {
+      next(error)
+    }
   }
 
 
