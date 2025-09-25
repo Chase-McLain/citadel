@@ -17,6 +17,9 @@ class CitadelEventsService{
 
  async updateEvent(eventId, eventData) {
    let updatedEvent = await this.getEventById(eventId)
+   if (updatedEvent.isCanceled) {
+    throw new Error("This event has already been canceled");
+   }
    updatedEvent.name = eventData.name
    updatedEvent.description = eventData.description
    await updatedEvent.save()

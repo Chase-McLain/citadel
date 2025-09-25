@@ -18,8 +18,6 @@ export class CitadelEventsController extends BaseController{
         .post('', this.createEvent)
         .put('/:eventId', this.updateEvent)
         .delete('/:eventId', this.cancelEvent)
-
-
   }
 
 
