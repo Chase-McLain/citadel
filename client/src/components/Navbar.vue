@@ -17,14 +17,16 @@ watch(theme, () => {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-md bg-codeworks border-bottom border-vue p-0">
-    <div class="container gap-2">
-      <RouterLink :to="{ name: 'Home' }" class="d-flex align-items-center text-light">
-        <img class="navbar-brand logo p-0 m-0" alt="logo"
-          src="https://static.vecteezy.com/system/resources/thumbnails/018/741/618/small/castle-towers-tall-png.png"
-          height="45" />
-        <b class="fs-2">Citadel</b>
-      </RouterLink>
+  <nav class="navbar navbar-expand-md bg-codeworks border-bottom border-vue p-2">
+    <div class="container">
+      <div class="logo-box">
+        <RouterLink :to="{ name: 'Home' }" class="d-flex align-items-center text-light">
+          <img class="navbar-brand logo p-0 m-0" alt="logo"
+            src="https://static.vecteezy.com/system/resources/thumbnails/018/741/618/small/castle-towers-tall-png.png"
+            height="45" />
+          <b class="fs-2 me-4 logo-text">Citadel</b>
+        </RouterLink>
+      </div>
       <!-- collapse button -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-links"
         aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,12 +35,23 @@ watch(theme, () => {
       <!-- collapsing menu -->
       <div class="collapse navbar-collapse " id="navbar-links">
         <ul class="navbar-nav">
-          <li>
-            <RouterLink :to="{ name: 'About' }" class="btn text-green selectable">
-              About
-            </RouterLink>
-          </li>
+          <div class="logo-box mx-2">
+            <li>
+              <RouterLink :to="{ name: 'Home' }" class="btn text-white selectable">
+                Events
+              </RouterLink>
+            </li>
+          </div>
+          <div class="logo-box">
+            <li class="">
+              <RouterLink :to="{ name: 'About' }" class="btn text-white selectable">
+                About
+              </RouterLink>
+            </li>
+          </div>
         </ul>
+
+
         <!-- LOGIN COMPONENT HERE -->
         <div class="ms-auto">
           <button class="btn text-light" @click="toggleTheme"
@@ -58,10 +71,24 @@ a {
   text-decoration: none;
 }
 
+nav {
+  background-image: url(https://www.shutterstock.com/image-photo/black-stone-wall-old-castle-600nw-2472484225.jpg);
+
+}
+
 .logo {
   object-fit: contain;
   object-position: center;
   min-height: 5em;
+}
+
+.logo-box {
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 50px;
+}
+
+.logo-text {
+  text-shadow: 2px 2px 2px black;
 }
 
 .nav-link {
@@ -69,7 +96,7 @@ a {
 }
 
 .navbar-nav .router-link-exact-active {
-  border-bottom: 2px solid var(--bs-success);
+  border-bottom: 2px solid var(--bs-grey);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }

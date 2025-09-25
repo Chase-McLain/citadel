@@ -5,14 +5,13 @@ import { RouterView } from 'vue-router';
 </script>
 
 <template>
-  <header>
+  <header class="sticky-top">
     <Navbar />
   </header>
   <main>
     <RouterView />
   </main>
   <footer class=" text-center">
-    Made with <i class="mdi mdi-heart text-pink"></i> by CodeWorks
   </footer>
 </template>
 
