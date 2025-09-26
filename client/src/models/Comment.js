@@ -11,6 +11,7 @@ export class Comment{
     this.body = data.body
     this.createdAt = data.createdAt
     this.updatedAt = data.updatedAt
+    this.creator = data.creator
 
   }
 }

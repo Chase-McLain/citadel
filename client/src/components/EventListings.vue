@@ -8,7 +8,7 @@ import { computed } from 'vue';
 const events = computed(() => AppState.citadelEvents)
 
 
-const props = defineProps({
+defineProps({
 
   event: { type: CitadelEvent, required: true }
 
