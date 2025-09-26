@@ -24,7 +24,7 @@ const eventData = ref({
   location: '',
   name: '',
   type: '',
-  startDate: new Date()
+  startDate: new Date().toLocaleDateString('en-ca')
 
 })
 
@@ -40,7 +40,7 @@ async function createEvent() {
       location: '',
       name: '',
       type: '',
-      startDate: new Date()
+      startDate: new Date().toLocaleDateString('en-ca')
 
     }
     Pop.success('Event created')
@@ -100,9 +100,11 @@ async function createEvent() {
         </textarea>
         </div>
         <div class="col-md-12 text-end">
+
           <button class="btn btn-success mt-3" type="submit">
             Submit
           </button>
+
         </div>
       </div>
     </form>

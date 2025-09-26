@@ -58,4 +58,10 @@ img {
   max-width: 100px;
   border-radius: 50%;
 }
+
+a {
+  font-style: unset;
+  color: black;
+  text-decoration: unset;
+}
 </style>

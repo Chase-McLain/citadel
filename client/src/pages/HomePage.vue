@@ -15,14 +15,14 @@ onMounted(() =>
 
 
 const events = computed(() => {
-  if (Category.value == 'all') {
+  if (Category.value == 'All') {
     return AppState.citadelEvents
   }
   return AppState.citadelEvents.filter((event) => event.type == Category.value)
 })
 
 
-const Category = ref('all')
+const Category = ref('All')
 
 const categories = [
 
@@ -109,9 +109,15 @@ async function getEvents() {
       </div>
     </section>
     <section class="row border-top border-black mt-5 justify-content-evenly ">
+      <div class="col-md-4"></div>
+      <div type="button" @click="Category = 'All'"
+        class="col-md-3 text-center mt-3 all-box rounded-5 mb-3 d-flex align-items-center justify-content-center">
+        <h4 class="mb-0 logo-box text-white p-2">All Events</h4>
+      </div>
+      <div class="col-md-4"></div>
       <div v-for="category in categories" :key="category.name" class="col-md-3 text-center">
         <div type="button" @click="Category = category.name"
-          class="my-3 category-holder d-flex align-items-center justify-content-center rounded-5"
+          class="mb-3 category-holder d-flex align-items-center justify-content-center rounded-5"
           :style="{ backgroundImage: `URL(${category.picture})` }">
           <h4 class="mb-0 logo-box text-white p-2"> {{ category.name }} </h4>
         </div>
@@ -120,7 +126,7 @@ async function getEvents() {
     <section class="row position-relative mt-4 border-top border-black">
       <div class="col-md-2 relcol">
         <h3 class="how-to-header text-center">
-          All Events
+          {{ Category }} Events
         </h3>
       </div>
     </section>
@@ -139,6 +145,12 @@ async function getEvents() {
 </template>
 
 <style scoped lang="scss">
+a {
+  font-style: unset;
+  text-decoration: unset;
+  color: black;
+}
+
 main {
   background-image: url(https://www.rjtravelagency.com/wp-content/uploads/2023/04/Citadel-of-Aleppo-Syria-1.jpg);
   background-position: center;
@@ -154,6 +166,15 @@ main {
 .relcol {
   position: absolute;
   top: -20px;
+}
+
+.all-box {
+  background-image: url(https://static.scientificamerican.com/dam/m/90104e781fa5533/original/Cosmic-web.jpg?m=1735582985.859&w=600);
+  min-height: 90px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
 }
 
 .how-to-header {

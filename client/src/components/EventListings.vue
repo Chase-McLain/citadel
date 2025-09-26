@@ -20,16 +20,18 @@ const props = defineProps({
 
 
 <template>
-  <div class="event-box position-relative">
-    <img class="img-fluid event-pic" :src="event.coverImg" alt="event picture">
-    <b>{{ event.name }}</b>
-    <p class="m-0">Hosted by: {{ event.creator.name }}</p>
-    <p class="m-0">{{ event.newStartDate }} - {{ event.location }}</p>
-    <p>{{ event.ticketCount }} people attending</p>
-    <p class="position-absolute top-0 end-0 bg-white rounded-start p-1 border-start border-bottom border-black">{{
-      event.type }}
-    </p>
-  </div>
+  <RouterLink :to="{ name: 'Event', params: { eventId: event.id } }" class="">
+    <div class="event-box position-relative">
+      <img class="img-fluid event-pic" :src="event.coverImg" alt="event picture">
+      <b>{{ event.name }}</b>
+      <p class="m-0">Hosted by: {{ event.creator.name }}</p>
+      <p class="m-0">{{ event.newStartDate }} - {{ event.location }}</p>
+      <p>{{ event.ticketCount }} people attending</p>
+      <p class="position-absolute top-0 end-0 bg-white rounded-start p-1 border-start border-bottom border-black">{{
+        event.type }}
+      </p>
+    </div>
+  </RouterLink>
 </template>
 
 
