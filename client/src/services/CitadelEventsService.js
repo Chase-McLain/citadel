@@ -6,6 +6,9 @@ import { logger } from "@/utils/Logger.js"
 
 
 class CitadelEventsService{
+  // lowerCapacity() {
+  //   const res
+  // }
 
 
   async cancelEvent(eventId) {
@@ -33,6 +36,8 @@ class CitadelEventsService{
     const response = await api.post('api/events',eventData)
     const event = new CitadelEvent(response.data)
     AppState.citadelEvents.push(event)
+    AppState.activeEvent = event
+    return event
   }
 
 

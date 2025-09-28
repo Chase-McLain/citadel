@@ -2,6 +2,7 @@
 import { AppState } from '@/AppState.js';
 import { citadelEventsService } from '@/services/CitadelEventsService.js';
 import { commentsService } from '@/services/CommentsService.js';
+import { ticketsService } from '@/services/TicketsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
 import { computed, onMounted, ref } from 'vue';
@@ -13,11 +14,13 @@ import { useRoute } from 'vue-router';
 const event = computed(() => AppState.activeEvent)
 const account = computed(() => AppState.account)
 const comments = computed(() => AppState.comments)
+const tickets = computed(() => AppState.tickets)
 const route = useRoute()
 
 onMounted(() => {
   getEventById()
   getCommentsById()
+  getTicketsForEvent()
 })
 
 
@@ -27,6 +30,16 @@ const commentData = ref({
   body: ''
 
 })
+
+
+const eventData = ref({
+
+  eventId: route.params.eventId,
+  accountId: ''
+
+})
+
+
 
 
 async function getCommentsById() {
@@ -90,6 +103,38 @@ async function removeComment(commentId) {
 }
 
 
+async function buyTicket() {
+  try {
+    await ticketsService.buyTicket(eventData.value)
+  }
+  catch (error) {
+    Pop.error(error);
+    logger.log('Could not purchase ticket', error)
+  }
+}
+
+
+async function refundTicket() {
+  try {
+    await ticketsService.refundTicket()
+  }
+  catch (error) {
+    Pop.error(error);
+  }
+}
+
+
+async function getTicketsForEvent() {
+  try {
+    await ticketsService.getTicketsForEvent(route.params.eventId)
+  }
+  catch (error) {
+    Pop.error(error);
+    logger.log(error)
+  }
+}
+
+
 </script>
 
 
@@ -98,9 +143,15 @@ async function removeComment(commentId) {
     <section v-if="AppState.activeEvent" class="row justify-content-center">
       <div class="col-md-12 text-center">
         <h5 class="m-4">{{ event.name }} Details</h5>
-        <button class="btn btn-success mb-2">
-          Purchase Ticket
-        </button>
+        <div v-if="event.capacity >= 1">
+          <button @click="buyTicket(), eventData.accountId = account.id" v-if="!event.isCanceled"
+            class="btn btn-success mb-2">
+            Purchase Ticket
+          </button>
+        </div>
+        <div v-if="event.capacity == 0">
+          <h4>Event Sold Out</h4>
+        </div>
       </div>
       <div class="col-md-12 text-center">
         <img class="img-fluid event-img" :src="event.coverImg" alt="event picture">
@@ -123,7 +174,7 @@ async function removeComment(commentId) {
         <p>{{ event.description }}</p>
       </div>
       <div class="col-md-7 text-end" v-if="!event.isCanceled">
-        <div v-if="AppState.account">
+        <div v-if="account">
           <div v-if="event.creatorId == account.id">
             <button type="button" @click="cancelEvent(event.id)" class="btn btn-danger">
               CANCEL EVENT
@@ -132,12 +183,35 @@ async function removeComment(commentId) {
         </div>
       </div>
     </section>
+    <section class="row justify-content-center">
+      <div v-if="account.id" class="col-md-6">
+        <span class="d-flex">
+          <button type="button" @click="refundTicket()" class="btn btn-info me-2">
+            REFUND
+          </button>
+          <p>You are currently attending this event</p>
+        </span>
+      </div>
+    </section>
+    <div class="container">
+      <section class="row" v-if="tickets">
+        <div class="col-12 text-center">
+          <p>Attendees:</p>
+        </div>
+        <div v-for="ticket in tickets" :key="ticket.id" class="col-2 text-center">
+          <span class="d-flex">
+            <img class="img-fluid profile-image" :src="ticket.profile.picture" alt="">
+            <p class="m-0">{{ ticket.profile.name }}</p>
+          </span>
+        </div>
+      </section>
+    </div>
     <section class="row justify-content-center mt-2">
       <div class="col-md-6 text-end">
         <form @submit.prevent="createComment()">
           <textarea v-model="commentData.body" id="comment-body" class="form-control" required minlength="1"
             maxlength="500" placeholder="Leave a comment!"></textarea>
-          <button type="submit" class="btn btn-success mt-2">
+          <button type="submit" class="btn btn-success my-2">
             Post
           </button>
         </form>
@@ -153,8 +227,8 @@ async function removeComment(commentId) {
               <p>{{ comment.creator.name }}</p>
             </span>
             <p>{{ comment.body }}</p>
-            <div class="text-end">
-              <button @click="removeComment(comment.id)" v-if="comment.creatorId == account.id" class="btn btn-danger">
+            <div v-if="account" class="text-end">
+              <button v-if="comment.creatorId == account.id" @click="removeComment(comment.id)" class="btn btn-danger">
                 Remove
               </button>
             </div>
@@ -178,5 +252,11 @@ async function removeComment(commentId) {
   object-position: center;
   max-height: 500px;
   min-height: 499px;
+}
+
+.profile-image {
+  border-radius: 50%;
+  max-height: 20px;
+  aspect-ratio: 1/1;
 }
 </style>

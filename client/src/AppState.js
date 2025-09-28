@@ -12,6 +12,8 @@ export const AppState = reactive({
   /** @type {import('./models/CitadelEvent.js').CitadelEvent[]}*/
   citadelEvents: [],
 
+  /** @type {import('./models/Ticket.js').Ticket[]}*/
+  attendingEvents: [],
 
   /** @type {import('./models/CitadelEvent.js').CitadelEvent}*/
   activeEvent: null,

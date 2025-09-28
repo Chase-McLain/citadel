@@ -3,9 +3,13 @@ import { AppState } from '@/AppState.js';
 import { citadelEventsService } from '@/services/CitadelEventsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
+import { Modal } from 'bootstrap';
 import { computed, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 const account = computed(() => AppState.account)
+const activeEvent = computed(() => AppState.activeEvent)
+const router = useRouter()
 
 const types = [
 
@@ -31,7 +35,7 @@ const eventData = ref({
 
 async function createEvent() {
   try {
-    await citadelEventsService.createEvent(eventData.value)
+    const newEvent = await citadelEventsService.createEvent(eventData.value)
     eventData.value = {
 
       capacity: 0,
@@ -43,7 +47,8 @@ async function createEvent() {
       startDate: new Date().toLocaleDateString('en-ca')
 
     }
-    Pop.success('Event created')
+    Modal.getInstance('#event-form-modal').hide()
+    router.push({ name: 'Event', params: { eventId: newEvent.id } })
   }
   catch (error) {
     Pop.error(error);
@@ -100,11 +105,11 @@ async function createEvent() {
         </textarea>
         </div>
         <div class="col-md-12 text-end">
-
+          <!-- <RouterLink :to="{ name: 'Event', params: { eventId: activeEvent.id } }" class=""> -->
           <button class="btn btn-success mt-3" type="submit">
             Submit
           </button>
-
+          <!-- </RouterLink> -->
         </div>
       </div>
     </form>

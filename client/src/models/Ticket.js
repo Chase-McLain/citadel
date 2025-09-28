@@ -10,6 +10,8 @@ export class Ticket{
     this.eventId = data.eventId
     this.createdAt = data.createdAt
     this.updatedAt = data.updatedAt
+    this.event = data.event
+    this.profile = data.profile
 
   }
 }
