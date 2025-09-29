@@ -1,5 +1,6 @@
 <script setup>
 import { AppState } from '@/AppState.js';
+import { accountService } from '@/services/AccountService.js';
 import { citadelEventsService } from '@/services/CitadelEventsService.js';
 import { commentsService } from '@/services/CommentsService.js';
 import { ticketsService } from '@/services/TicketsService.js';
@@ -11,16 +12,20 @@ import { useRoute } from 'vue-router';
 
 
 
-const event = computed(() => AppState.activeEvent)
 const account = computed(() => AppState.account)
+const event = computed(() => AppState.activeEvent)
 const comments = computed(() => AppState.comments)
 const tickets = computed(() => AppState.tickets)
+const myTickets = computed(() => AppState.attendingEvents)
+const refund = computed(() => AppState.ticketsForActiveEvent)
 const route = useRoute()
 
 onMounted(() => {
   getEventById()
   getCommentsById()
   getTicketsForEvent()
+  getMyTickets()
+  getTicketsIHaveForEvent()
 })
 
 
@@ -106,6 +111,8 @@ async function removeComment(commentId) {
 async function buyTicket() {
   try {
     await ticketsService.buyTicket(eventData.value)
+    const eventId = route.params.eventId
+    await citadelEventsService.buyTicket(eventId, event.value)
   }
   catch (error) {
     Pop.error(error);
@@ -116,7 +123,7 @@ async function buyTicket() {
 
 async function refundTicket() {
   try {
-    await ticketsService.refundTicket()
+    await ticketsService.refundTicket(route.params.eventId)
   }
   catch (error) {
     Pop.error(error);
@@ -131,6 +138,29 @@ async function getTicketsForEvent() {
   catch (error) {
     Pop.error(error);
     logger.log(error)
+  }
+}
+
+
+async function getMyTickets() {
+  try {
+    await setTimeout(await accountService.getAttendingEvents, 2000)
+  }
+  catch (error) {
+    Pop.error(error);
+    logger.log(error)
+  }
+}
+
+
+async function getTicketsIHaveForEvent() {
+  try {
+    await setTimeout(() => {
+      ticketsService.getTicketsIHaveForEvent(route.params.eventId)
+    }, 3000);
+  }
+  catch (error) {
+    Pop.error(error);
   }
 }
 
@@ -183,14 +213,16 @@ async function getTicketsForEvent() {
         </div>
       </div>
     </section>
-    <section class="row justify-content-center">
-      <div v-if="account.id" class="col-md-6">
-        <span class="d-flex">
-          <button type="button" @click="refundTicket()" class="btn btn-info me-2">
-            REFUND
-          </button>
-          <p>You are currently attending this event</p>
-        </span>
+    <section v-if="AppState.activeEvent" class="row justify-content-center">
+      <div v-if="!event.isCanceled">
+        <div v-if="refund" class="col-md-6">
+          <span class="d-flex">
+            <button type="button" @click="refundTicket()" class="btn btn-info me-2">
+              REFUND
+            </button>
+            <p>You are currently attending this event</p>
+          </span>
+        </div>
       </div>
     </section>
     <div class="container">

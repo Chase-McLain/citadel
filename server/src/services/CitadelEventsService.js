@@ -35,6 +35,7 @@ class CitadelEventsService{
    }
    updatedEvent.name = eventData.name
    updatedEvent.description = eventData.description
+   updatedEvent.capacity = eventData.capacity
    await updatedEvent.save()
    return updatedEvent
  }

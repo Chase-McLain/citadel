@@ -6,6 +6,15 @@ import { logger } from "@/utils/Logger.js"
 
 
 class CitadelEventsService{
+
+
+  async buyTicket(eventId, event) {
+    event.capacity --
+    const response = await api.put(`api/events/${eventId}`, event)
+  }
+
+
+
   // lowerCapacity() {
   //   const res
   // }
@@ -45,7 +54,6 @@ class CitadelEventsService{
     const response = await api.get('api/events')
     const events = response.data.map((event) => new CitadelEvent(event))
     AppState.citadelEvents = events
-    logger.log(response)
   }
 
 

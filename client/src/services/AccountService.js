@@ -12,7 +12,6 @@ class AccountService {
     const response = await api.get('/account/tickets')
     const tickets = response.data.map((ticket) => new Ticket(ticket))
     AppState.attendingEvents = tickets
-    logger.log(AppState.attendingEvents)
   }
 
 

@@ -10,7 +10,7 @@ export const CitadelEventSchema = new Schema({
   description: { type: String, required: true, minlength: 15, maxlength: 1000 },
   coverImg: { type: String, required: true, minlength: 1, maxlength: 500 },
   location: { type: String, required: true, minlength: 1, maxlength: 500 },
-  capacity: { type: Number, required: true, minlength: 1, maxlength: 5000 },
+  capacity: { type: Number, minlength: 1, maxlength: 5000 },
   startDate: {type: Date, required: true },
   isCanceled: { type: Boolean, required: true, default: false },
   type: { type: String, enum: ['concert', 'convention', 'sport', 'digital'] }

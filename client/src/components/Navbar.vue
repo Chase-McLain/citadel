@@ -42,13 +42,13 @@ watch(theme, () => {
               </RouterLink>
             </li>
           </div>
-          <div class="logo-box me-2">
+          <!-- <div class="logo-box me-2">
             <li class="">
               <RouterLink :to="{ name: 'About' }" class="btn text-white selectable">
                 About
               </RouterLink>
             </li>
-          </div>
+          </div> -->
           <div class="logo-box">
             <li>
               <RouterLink :to="{ name: 'Account' }" class="btn text-white selectable">
